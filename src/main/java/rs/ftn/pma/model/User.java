@@ -15,7 +15,7 @@ import java.util.Collection;
 @NoArgsConstructor
 public class User implements UserDetails{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(columnDefinition = "serial")
     @Getter
     private Long id;

@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
-@Table(name = "user")
+@Table(name = "user_reg")
 @Entity
 @NoArgsConstructor
 public class User implements UserDetails{

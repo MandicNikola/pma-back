@@ -10,12 +10,13 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
-@Table(name = "user_reg")
+@Table(name = "users")
 @Entity
 @NoArgsConstructor
 public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "serial")
     @Getter
     private Long id;
 

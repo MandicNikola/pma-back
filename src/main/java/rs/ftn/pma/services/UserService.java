@@ -1,5 +1,6 @@
 package rs.ftn.pma.services;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,6 +15,7 @@ import rs.ftn.pma.dto.UserDto;
 import rs.ftn.pma.model.User;
 import rs.ftn.pma.repository.UserRepository;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @Service

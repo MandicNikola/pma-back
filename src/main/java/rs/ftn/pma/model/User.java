@@ -35,6 +35,7 @@ public class User implements UserDetails{
     @Setter
     private String email;
 
+    @Column(unique = true)
     @Getter
     @Setter
     private String username;

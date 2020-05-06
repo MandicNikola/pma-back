@@ -1,5 +1,7 @@
 package rs.ftn.pma.controller;
 
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,9 @@ import rs.ftn.pma.dto.UserDto;
 import rs.ftn.pma.model.User;
 import rs.ftn.pma.services.UserService;
 import rs.ftn.pma.utils.JwtUtil;
+
+import java.sql.SQLException;
+import java.util.HashMap;
 
 @RestController
 @RequestMapping(value = "users")
@@ -42,9 +47,9 @@ public class UserController {
     }
 
     @PostMapping(value="")
-    public ResponseEntity<User> createUser(@RequestBody UserDto user) {
+    public ResponseEntity<?> createUser(@RequestBody UserDto user) {
         try {
-            return new ResponseEntity<User>(userService.createUser(user), HttpStatus.OK);
+            return new ResponseEntity<>(userService.createUser(user), HttpStatus.OK);
         }catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

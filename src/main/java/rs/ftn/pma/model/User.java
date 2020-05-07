@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Table(name = "users")
 @Entity
@@ -43,6 +45,13 @@ public class User implements UserDetails{
     @Getter
     @Setter
     private String password;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "setting_id", referencedColumnName = "id")
+    private UserSettings settings;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<Goals> userGoals = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

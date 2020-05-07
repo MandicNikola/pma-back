@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import rs.ftn.pma.dto.UserDto;
+import rs.ftn.pma.dto.UserResponse;
+import rs.ftn.pma.mappers.UserMapper;
 import rs.ftn.pma.model.User;
 import rs.ftn.pma.repository.UserRepository;
 
@@ -23,8 +25,6 @@ public class UserService implements UserDetailsService {
     @Autowired
     UserRepository userRepository;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -32,7 +32,7 @@ public class UserService implements UserDetailsService {
         return  userRepository.findOneById(id);
     }
 
-    public User createUser(UserDto user) {
+    public UserResponse createUser(UserDto user) {
         User newUser = new User();
         newUser.setEmail(user.getEmail());
         newUser.setLastName(user.getLastname());
@@ -40,7 +40,8 @@ public class UserService implements UserDetailsService {
         newUser.setNumber(user.getPhone());
         newUser.setUsername(user.getUsername());
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        return  userRepository.save(newUser);
+        newUser = userRepository.save(newUser);
+        return UserMapper.INSTANCE.mapToResponse(newUser);
     }
 
     @Override

@@ -14,9 +14,9 @@ public class GoalResponse {
 
     private Long id;
 
-    private GOAL_KEYS goalKey;
+    private String goalKey;
 
     private double goalValue;
 
-    private LocalDateTime localDateTime;
+    private String localDateTime;
 }

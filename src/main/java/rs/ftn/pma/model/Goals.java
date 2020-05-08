@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import rs.ftn.pma.enums.GOAL_KEYS;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -19,8 +20,9 @@ public class Goals {
     private Long id;
 
     @Column(name="local_date_time", columnDefinition = "TIMESTAMP")
-    private LocalDateTime localDateTime;
+    private LocalDate localDateTime;
 
+    @Enumerated(value = EnumType.STRING)
     private GOAL_KEYS goalKey;
 
     private double goalValue;

@@ -12,11 +12,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class GoalRequest {
 
-    private LocalDateTime dateTime;
+    private String dateTime;
 
-    private GOAL_KEYS goalKey;
+    private String goalKey;
 
     private double goalValue;
 
     private Long userId;
+
+
 }

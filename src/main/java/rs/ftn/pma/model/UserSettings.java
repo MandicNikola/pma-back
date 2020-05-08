@@ -26,7 +26,7 @@ public class UserSettings {
 
     private int waterReminder;
 
-    @OneToOne(mappedBy = "settings", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @OneToOne(mappedBy = "settings", fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.PERSIST})
     private User user;
 
 }

@@ -9,7 +9,6 @@ import rs.ftn.pma.dto.GoalResponse;
 import rs.ftn.pma.model.Goals;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Mapper
 public interface GoalMapper {

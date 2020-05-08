@@ -48,9 +48,13 @@ public class User implements UserDetails{
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "setting_id", referencedColumnName = "id")
+    @Getter
+    @Setter
     private UserSettings settings;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    @Getter
+    @Setter
     private Set<Goals> userGoals = new HashSet<>();
 
     @Override

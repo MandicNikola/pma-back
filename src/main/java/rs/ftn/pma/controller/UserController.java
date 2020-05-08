@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import rs.ftn.pma.dto.AuthRequest;
 import rs.ftn.pma.dto.AuthResponse;
 import rs.ftn.pma.dto.UserDto;
+import rs.ftn.pma.dto.UserSettingRequest;
 import rs.ftn.pma.model.User;
 import rs.ftn.pma.services.UserService;
 import rs.ftn.pma.utils.JwtUtil;
@@ -73,5 +74,14 @@ public class UserController {
         final String jwt = jwtTokenUtil.generateToken(userDetails);
 
         return ResponseEntity.ok(new AuthResponse(jwt));
+    }
+
+    @PostMapping(value = "/settings")
+    public ResponseEntity<?> createSettings(@RequestBody UserSettingRequest userSettingRequest) {
+        try {
+            return userService.createSetting(userSettingRequest);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

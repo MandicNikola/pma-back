@@ -42,29 +42,25 @@ public class UserService implements UserDetailsService {
     }
 
     public UserResponse createUser(UserDto user) {
-        User newUser = new User();
-        newUser.setEmail(user.getEmail());
-        newUser.setLastName(user.getLastname());
-        newUser.setName(user.getFirstname());
-        newUser.setNumber(user.getPhone());
-        newUser.setUsername(user.getUsername());
-        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        User newUser = UserMapper.INSTANCE.mapRequestToUser(user);
         newUser = userRepository.save(newUser);
         return UserMapper.INSTANCE.mapToResponse(newUser);
     }
 
     public ResponseEntity<?> createSetting(UserSettingRequest userSettingRequest) {
         User user = userRepository.findOneById(userSettingRequest.getUserId());
-        if(user.getSettings() != null) {
-            HashMap<String, String> map = new HashMap<>();
-            map.put("message", "user already has settings");
-            map.put("code", "1212");
-            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+        if (user.getSettings() == null) {
+            UserSettings userSettings = UserSettingsMapper.INSTANCE.mapToUserSettings(userSettingRequest);
+            userSettings.setUser(user);
+            userSettings = userSettingsRepository.save(userSettings);
+            user.setSettings(userSettings);
+            userRepository.save(user);
+            return new ResponseEntity<>(UserSettingsMapper.INSTANCE.mapToUserSettingsResponse(userSettings), HttpStatus.OK);
         }
-        UserSettings userSettings = UserSettingsMapper.INSTANCE.mapToUserSettings(userSettingRequest);
-        userSettings.setUser(user);
-        userSettings = userSettingsRepository.save(userSettings);
-        return new ResponseEntity<>(UserSettingsMapper.INSTANCE.mapToUserSettingsResponse(userSettings),HttpStatus.OK);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("message", "user already has settings");
+        map.put("code", "1212");
+        return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
     }
 
     @Override

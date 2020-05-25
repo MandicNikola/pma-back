@@ -57,6 +57,11 @@ public class User implements UserDetails{
     @Setter
     private Set<Goals> userGoals = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    @Getter
+    @Setter
+    private Set<Route> userRoutes = new HashSet<>();
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new ArrayList<> ();

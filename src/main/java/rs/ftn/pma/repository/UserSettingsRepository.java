@@ -6,4 +6,5 @@ import rs.ftn.pma.model.UserSettings;
 
 @Repository
 public interface UserSettingsRepository extends JpaRepository<UserSettings, Long> {
+    UserSettings findOneById(Long id);
 }

@@ -1,16 +1,11 @@
 package rs.ftn.pma.services;
 
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import rs.ftn.pma.dto.UserDto;
 import rs.ftn.pma.dto.UserResponse;
@@ -22,7 +17,6 @@ import rs.ftn.pma.model.UserSettings;
 import rs.ftn.pma.repository.UserRepository;
 import rs.ftn.pma.repository.UserSettingsRepository;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -34,8 +28,6 @@ public class UserService implements UserDetailsService {
     @Autowired
     UserSettingsRepository userSettingsRepository;
 
-
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public User getUser(Long id) {
         return  userRepository.findOneById(id);
@@ -61,6 +53,14 @@ public class UserService implements UserDetailsService {
         map.put("message", "user already has settings");
         map.put("code", "1212");
         return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+    }
+
+
+    public ResponseEntity<?> updateSettings(UserSettingRequest userSettingRequest, Long settingId) {
+        UserSettings userSettings = userSettingsRepository.findOneById(settingId);
+        UserSettingsMapper.INSTANCE.patchMapping(userSettings, userSettingRequest);
+        userSettingsRepository.save(userSettings);
+        return new ResponseEntity<>(UserSettingsMapper.INSTANCE.mapToUserSettingsResponse(userSettings), HttpStatus.OK);
     }
 
     @Override

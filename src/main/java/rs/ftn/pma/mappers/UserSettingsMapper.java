@@ -1,8 +1,6 @@
 package rs.ftn.pma.mappers;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 import rs.ftn.pma.dto.UserSettingRequest;
 import rs.ftn.pma.dto.UserSettingResponse;
@@ -23,4 +21,11 @@ public interface UserSettingsMapper {
     static Long mapUserId(User user) {
         return user.getId();
     }
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE, nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
+//    @Mapping(target = "height", source = "height")
+//    @Mapping(target = "weight", source = "weight")
+//    @Mapping(target = "sex", source="sex")
+//    @Mapping(target = "waterReminder", source = "waterReminder")
+    void patchMapping(@MappingTarget UserSettings userSettings, UserSettingRequest userSettingRequest);
 }

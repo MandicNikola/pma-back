@@ -67,7 +67,6 @@ public class UserController {
             throw new Exception("Incorrect username or password", e);
         }
 
-        System.out.println("PPPPP");
         final UserDetails userDetails = userService
                 .loadUserByUsername(credentials.getUsername());
 
@@ -80,6 +79,15 @@ public class UserController {
     public ResponseEntity<?> createSettings(@RequestBody UserSettingRequest userSettingRequest) {
         try {
             return userService.createSetting(userSettingRequest);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PatchMapping(value = "/settings/{id}")
+    public ResponseEntity<?> updateSettings(@RequestBody UserSettingRequest userSettingRequest, @PathVariable("id") Long settingId) {
+        try {
+            return userService.updateSettings(userSettingRequest, settingId);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -23,7 +23,6 @@ public class RouteController {
     public ResponseEntity<?> getRoutes(@RequestHeader("Authorization") String token) {
         // remove `Bearer ` part from token
         String username = jwtUtil.extractUsername(token.substring(7));
-        System.out.println("username :" + username);
         return new ResponseEntity<>(new ArrayList<>(),HttpStatus.OK);
     }
 }

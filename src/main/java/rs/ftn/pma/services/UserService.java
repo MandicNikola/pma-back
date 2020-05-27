@@ -1,5 +1,6 @@
 package rs.ftn.pma.services;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import rs.ftn.pma.dto.UserDto;
 import rs.ftn.pma.dto.UserResponse;
 import rs.ftn.pma.dto.UserSettingRequest;
@@ -33,7 +35,7 @@ public class UserService implements UserDetailsService {
         return  userRepository.findOneById(id);
     }
 
-    public UserResponse createUser(UserDto user) {
+    public UserResponse createUser(UserDto user) throws ConstraintViolationException {
         User newUser = UserMapper.INSTANCE.mapRequestToUser(user);
         newUser = userRepository.save(newUser);
         return UserMapper.INSTANCE.mapToResponse(newUser);

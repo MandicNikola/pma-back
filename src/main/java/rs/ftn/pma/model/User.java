@@ -37,11 +37,12 @@ public class User implements UserDetails{
     @Setter
     private String email;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     @Getter
     @Setter
     private String username;
 
+    @Column(nullable = false)
     @Getter
     @Setter
     private String password;

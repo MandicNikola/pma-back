@@ -49,11 +49,7 @@ public class UserController {
 
     @PostMapping(value="")
     public ResponseEntity<?> createUser(@RequestBody UserDto user) {
-        try {
-            return new ResponseEntity<>(userService.createUser(user), HttpStatus.OK);
-        }catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return new ResponseEntity<>(userService.createUser(user), HttpStatus.OK);
     }
 
     @PostMapping(value="/login")

@@ -22,6 +22,6 @@ public class ExceptionController {
             message.put("message", "null value entered");
         }
 
-        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(message, HttpStatus.NOT_ACCEPTABLE);
     }
 }

@@ -21,6 +21,7 @@ import rs.ftn.pma.services.UserService;
 import rs.ftn.pma.utils.JwtUtil;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @RestController
@@ -88,4 +89,12 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+   /* @GetMapping(value = "/getLogged")
+    public ResponseEntity<User> getLoggedUser(@RequestHeader("Authorization") String token) {
+        System.out.println("Usao u getLogged");
+        String username = jwtTokenUtil.extractUsername(token.substring(7));
+        User loggedUser = userService.getUserByUsername(username);
+        System.out.println("Username  je "+loggedUser.getUsername());
+        return new ResponseEntity<>(loggedUser,HttpStatus.OK);
+    }*/
 }

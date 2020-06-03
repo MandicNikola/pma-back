@@ -34,8 +34,9 @@ public class UserService implements UserDetailsService {
     public User getUser(Long id) {
         return  userRepository.findOneById(id);
     }
-    public User getUserByUsername(String username) {
-        return  userRepository.findOneByUsername(username);
+    public UserResponse getUserByUsername(String username) {
+        User user =  userRepository.findOneByUsername(username);
+        return UserMapper.INSTANCE.mapToResponse(user);
     }
 
     public UserResponse createUser(UserDto user) throws ConstraintViolationException {

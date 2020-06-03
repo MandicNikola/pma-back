@@ -12,10 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import rs.ftn.pma.dto.AuthRequest;
-import rs.ftn.pma.dto.AuthResponse;
-import rs.ftn.pma.dto.UserDto;
-import rs.ftn.pma.dto.UserSettingRequest;
+import rs.ftn.pma.dto.*;
 import rs.ftn.pma.model.User;
 import rs.ftn.pma.services.UserService;
 import rs.ftn.pma.utils.JwtUtil;
@@ -89,12 +86,11 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-   /* @GetMapping(value = "/getLogged")
-    public ResponseEntity<User> getLoggedUser(@RequestHeader("Authorization") String token) {
-        System.out.println("Usao u getLogged");
+    @GetMapping(value = "/getLogged")
+    public ResponseEntity<?> getLoggedUser(@RequestHeader("Authorization") String token) {
         String username = jwtTokenUtil.extractUsername(token.substring(7));
-        User loggedUser = userService.getUserByUsername(username);
+        UserResponse loggedUser = userService.getUserByUsername(username);
         System.out.println("Username  je "+loggedUser.getUsername());
         return new ResponseEntity<>(loggedUser,HttpStatus.OK);
-    }*/
+    }
 }

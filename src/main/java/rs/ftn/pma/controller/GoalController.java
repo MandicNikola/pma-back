@@ -3,12 +3,10 @@ package rs.ftn.pma.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import rs.ftn.pma.dto.GoalRequest;
 import rs.ftn.pma.services.GoalService;
+import rs.ftn.pma.utils.JwtUtil;
 
 @RestController
 @RequestMapping(value = "goals")
@@ -17,10 +15,14 @@ public class GoalController {
     @Autowired
     GoalService goalService;
 
+    @Autowired
+    JwtUtil jwtUtil;
+
     @PostMapping(value = "")
-    public ResponseEntity<?> createGoal(@RequestBody GoalRequest goalRequest) {
+    public ResponseEntity<?> createGoal(@RequestBody GoalRequest goalRequest,@RequestHeader("Authorization") String token) {
+        String username = jwtUtil.extractUsername(token.substring(7));
         try {
-            return new ResponseEntity<>(goalService.createGoal(goalRequest), HttpStatus.OK);
+            return new ResponseEntity<>(goalService.createGoal(username, goalRequest), HttpStatus.OK);
         } catch (Exception e)
         {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

@@ -17,5 +17,7 @@ public class GoalRequest {
 
     private Long userId;
 
+    private double percentage;
+
 
 }

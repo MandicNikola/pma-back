@@ -19,9 +19,9 @@ public class GoalService {
     @Autowired
     UserRepository userRepository;
 
-    public GoalResponse createGoal(GoalRequest goal) {
+    public GoalResponse createGoal(String username, GoalRequest goal) {
+        User user = userRepository.findOneByUsername(username);
         Goals newGoal = GoalMapper.INSTANCE.mapToGoal(goal);
-        User user = userRepository.findOneById(goal.getUserId());
         newGoal.setUser(user);
         newGoal = goalRepository.save(newGoal);
         return GoalMapper.INSTANCE.mapToResponse(newGoal);

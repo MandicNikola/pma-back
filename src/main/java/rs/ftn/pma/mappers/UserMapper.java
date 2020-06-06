@@ -2,12 +2,15 @@ package rs.ftn.pma.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import rs.ftn.pma.dto.UserDto;
+import rs.ftn.pma.dto.UserProfileResponse;
 import rs.ftn.pma.dto.UserResponse;
 import rs.ftn.pma.model.User;
+import rs.ftn.pma.model.UserSettings;
 
 @Mapper
 public interface UserMapper {
@@ -18,6 +21,19 @@ public interface UserMapper {
     @Mapping(source = "username", target = "username")
     @Mapping(source = "email", target = "email")
     UserResponse mapToResponse(User user);
+
+    @Mapping(source = "name", target = "firstname")
+    @Mapping(source = "lastName", target = "lastname")
+    @Mapping(source = "username", target = "username")
+    @Mapping(source = "email", target = "email")
+    UserProfileResponse mapToProfileResponse(User user);
+
+    @Mapping(source = "height", target = "height")
+    @Mapping(source = "weight", target = "weight")
+    @Mapping(source = "sex", target = "gender")
+    @Mapping(source = "waterReminder", target = "waterReminder")
+    void  mapToProfileResponse2(UserSettings user, @MappingTarget UserProfileResponse profile);
+
 
     @Mapping(target = "id", ignore = true)
     @Mapping(source = "firstname", target = "name")

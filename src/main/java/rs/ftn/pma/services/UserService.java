@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rs.ftn.pma.dto.UserDto;
+import rs.ftn.pma.dto.UserProfileResponse;
 import rs.ftn.pma.dto.UserResponse;
 import rs.ftn.pma.dto.UserSettingRequest;
 import rs.ftn.pma.mappers.UserMapper;
@@ -37,6 +38,13 @@ public class UserService implements UserDetailsService {
     public UserResponse getUserByUsername(String username) {
         User user =  userRepository.findOneByUsername(username);
         return UserMapper.INSTANCE.mapToResponse(user);
+    }
+    public UserProfileResponse getUserProfileByUsername(String username) {
+        User user =  userRepository.findOneByUsername(username);
+        UserSettings userSettings = user.getSettings();
+        UserProfileResponse userProfile = UserMapper.INSTANCE.mapToProfileResponse(user);
+        UserMapper.INSTANCE.mapToProfileResponse2(userSettings, userProfile);
+        return  userProfile;
     }
 
     public UserResponse createUser(UserDto user) throws ConstraintViolationException {

@@ -16,7 +16,7 @@ public class UserSettingResponse {
 
     private String sex;
 
-    private int waterReminder;
+    private boolean waterReminder;
 
     private Long userId;
 }

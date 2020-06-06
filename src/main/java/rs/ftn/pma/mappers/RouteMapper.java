@@ -10,10 +10,7 @@ import rs.ftn.pma.model.Point;
 import rs.ftn.pma.model.Route;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Mapper
 public interface RouteMapper {
@@ -34,10 +31,12 @@ public interface RouteMapper {
     @Named("pointsPrepare")
     static Set<Point> preparePoints(HashMap<String, List<Double>> points){
         Set<Point> pointsSet = new HashSet<>();
-        for(String key : points.keySet()){
+        TreeMap<String, List<Double>> treeMap = new TreeMap<>(new DateComparator());
+        treeMap.putAll(points);
+        for(String key : treeMap.keySet()){
             Point point = new Point();
-            point.setLat(points.get(key).get(0));
-            point.setLng(points.get(key).get(1));
+            point.setLat(treeMap.get(key).get(0));
+            point.setLng(treeMap.get(key).get(1));
             point.setTime(LocalDateTime.parse(key));
             pointsSet.add(point);
         }
@@ -46,4 +45,13 @@ public interface RouteMapper {
     }
 
     RouteResponse mapToResponse(Route route);
+}
+
+class DateComparator implements Comparator<String> {
+    @Override
+    public int compare(String o1, String o2) {
+        LocalDateTime dateTime1 = LocalDateTime.parse(o1);
+        LocalDateTime dateTime2 = LocalDateTime.parse(o2);
+        return dateTime1.compareTo(dateTime2);
+    }
 }

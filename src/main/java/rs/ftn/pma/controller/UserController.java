@@ -93,4 +93,12 @@ public class UserController {
         System.out.println("Username  je "+loggedUser.getUsername());
         return new ResponseEntity<>(loggedUser,HttpStatus.OK);
     }
+
+    @GetMapping(value = "/profile")
+    public ResponseEntity<?> getProfile(@RequestHeader("Authorization") String token) {
+        String username = jwtTokenUtil.extractUsername(token.substring(7));
+        UserProfileResponse loggedUser = userService.getUserProfileByUsername(username);
+        System.out.println("Username  je "+loggedUser.getUsername());
+        return new ResponseEntity<>(loggedUser,HttpStatus.OK);
+    }
 }

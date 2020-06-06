@@ -17,14 +17,14 @@ public class UserSettings {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String height;
+    private double height;
 
-    private String weight;
+    private double weight;
 
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
-    private int waterReminder;
+    private boolean waterReminder;
 
     @OneToOne(mappedBy = "settings", fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.PERSIST})
     private User user;

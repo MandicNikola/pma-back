@@ -15,7 +15,7 @@ public class UserSettingRequest {
 
     private String sex;
 
-    private int waterReminder;
+    private boolean waterReminder;
 
     private Long userId;
 }

@@ -83,7 +83,7 @@ public class UserService implements UserDetailsService {
         UserSettingsMapper.INSTANCE.patchMappingSettings(userSettings, userProfile);
         userRepository.save(user);
        // userSettingsRepository.save(userSettings);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(UserMapper.INSTANCE.mapToResponse(user), HttpStatus.OK);
     }
 
     @Override

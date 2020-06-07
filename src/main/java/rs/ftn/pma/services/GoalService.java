@@ -24,6 +24,7 @@ public class GoalService {
         Goals newGoal = GoalMapper.INSTANCE.mapToGoal(goal);
         newGoal.setUser(user);
         newGoal = goalRepository.save(newGoal);
+        System.out.println("dosao u service");
         return GoalMapper.INSTANCE.mapToResponse(newGoal);
     }
 

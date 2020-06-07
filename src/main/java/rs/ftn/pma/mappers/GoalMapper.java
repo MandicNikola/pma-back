@@ -17,6 +17,8 @@ public interface GoalMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(source = "dateTime", target = "localDateTime", qualifiedByName = "dateMapping")
     @Mapping(source = "goalValue", target = "goalValue")
+    @Mapping(source = "goalKey", target = "goalKey")
+
     Goals mapToGoal(GoalRequest goalRequest);
 
     @Named("dateMapping")

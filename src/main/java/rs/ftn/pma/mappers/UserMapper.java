@@ -1,9 +1,6 @@
 package rs.ftn.pma.mappers;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.Named;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import rs.ftn.pma.dto.UserDto;
@@ -48,4 +45,12 @@ public interface UserMapper {
     static String preparePassword(String password) {
         return new BCryptPasswordEncoder().encode(password);
     }
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE, nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
+    @Mapping(target = "username", source = "username")
+    @Mapping(target = "name", source = "firstname")
+    @Mapping(target = "lastName", source="lastname")
+    @Mapping(target = "email", source = "email")
+    void patchMappingUser(@MappingTarget User user, UserProfileResponse profile);
+
 }

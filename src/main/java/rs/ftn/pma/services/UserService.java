@@ -76,6 +76,15 @@ public class UserService implements UserDetailsService {
         userSettingsRepository.save(userSettings);
         return new ResponseEntity<>(UserSettingsMapper.INSTANCE.mapToUserSettingsResponse(userSettings), HttpStatus.OK);
     }
+    public ResponseEntity<?> updateProfile(UserProfileResponse userProfile, String username) {
+        User user = userRepository.findOneByUsername(username);
+        UserSettings userSettings = user.getSettings();
+        UserMapper.INSTANCE.patchMappingUser(user, userProfile);
+        UserSettingsMapper.INSTANCE.patchMappingSettings(userSettings, userProfile);
+        userRepository.save(user);
+       // userSettingsRepository.save(userSettings);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {

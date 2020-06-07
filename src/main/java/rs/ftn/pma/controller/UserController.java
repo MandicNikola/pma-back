@@ -86,6 +86,15 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PatchMapping(value = "/updateProfile")
+    public ResponseEntity<?> updateProfile(@RequestBody UserProfileResponse userProfile, @RequestHeader("Authorization") String token) {
+        try {
+            String username = jwtTokenUtil.extractUsername(token.substring(7));
+            return userService.updateProfile(userProfile, username);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @GetMapping(value = "/getLogged")
     public ResponseEntity<?> getLoggedUser(@RequestHeader("Authorization") String token) {
         String username = jwtTokenUtil.extractUsername(token.substring(7));

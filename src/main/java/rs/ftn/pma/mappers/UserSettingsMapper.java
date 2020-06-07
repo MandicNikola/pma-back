@@ -2,6 +2,7 @@ package rs.ftn.pma.mappers;
 
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
+import rs.ftn.pma.dto.UserProfileResponse;
 import rs.ftn.pma.dto.UserSettingRequest;
 import rs.ftn.pma.dto.UserSettingResponse;
 import rs.ftn.pma.model.User;
@@ -28,4 +29,12 @@ public interface UserSettingsMapper {
 //    @Mapping(target = "sex", source="sex")
 //    @Mapping(target = "waterReminder", source = "waterReminder")
     void patchMapping(@MappingTarget UserSettings userSettings, UserSettingRequest userSettingRequest);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE, nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
+    @Mapping(target = "height", source = "height")
+    @Mapping(target = "weight", source = "weight")
+    @Mapping(target = "sex", source="gender")
+    @Mapping(target = "waterReminder", source = "waterReminder")
+    void patchMappingSettings(@MappingTarget UserSettings userSettings, UserProfileResponse profile);
+
 }

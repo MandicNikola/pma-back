@@ -1,5 +1,6 @@
 package rs.ftn.pma.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,7 @@ public class UserSettings {
     private boolean waterReminder;
 
     @OneToOne(mappedBy = "settings", fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.PERSIST})
+    @JsonIgnore
     private User user;
 
 }

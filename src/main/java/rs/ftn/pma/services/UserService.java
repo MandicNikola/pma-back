@@ -9,10 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import rs.ftn.pma.dto.UserDto;
-import rs.ftn.pma.dto.UserProfileResponse;
-import rs.ftn.pma.dto.UserResponse;
-import rs.ftn.pma.dto.UserSettingRequest;
+import rs.ftn.pma.dto.*;
 import rs.ftn.pma.mappers.UserMapper;
 import rs.ftn.pma.mappers.UserSettingsMapper;
 import rs.ftn.pma.model.User;
@@ -83,9 +80,19 @@ public class UserService implements UserDetailsService {
         UserSettingsMapper.INSTANCE.patchMappingSettings(userSettings, userProfile);
         userRepository.save(user);
        // userSettingsRepository.save(userSettings);
-        return new ResponseEntity<>(UserMapper.INSTANCE.mapToResponse(user), HttpStatus.OK);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("message", "Profile  is updated.");
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
-
+    public ResponseEntity<?> updateReminder(SettingRequest  request, String username) {
+        User user = userRepository.findOneByUsername(username);
+        UserSettings userSettings = user.getSettings();
+        UserSettingsMapper.INSTANCE.patchMappingSettingsReminder(userSettings, request);
+        userSettingsRepository.save(userSettings);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("message", "Reminder has been updated.");
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         User user = userRepository.findOneByUsername(s);

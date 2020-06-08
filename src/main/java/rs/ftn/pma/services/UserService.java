@@ -46,6 +46,7 @@ public class UserService implements UserDetailsService {
 
     public UserResponse createUser(UserDto user) throws ConstraintViolationException {
         User newUser = UserMapper.INSTANCE.mapRequestToUser(user);
+        newUser.setSettings(new UserSettings());
         newUser = userRepository.save(newUser);
         return UserMapper.INSTANCE.mapToResponse(newUser);
     }
@@ -74,11 +75,18 @@ public class UserService implements UserDetailsService {
         return new ResponseEntity<>(UserSettingsMapper.INSTANCE.mapToUserSettingsResponse(userSettings), HttpStatus.OK);
     }
     public ResponseEntity<?> updateProfile(UserProfileResponse userProfile, String username) {
+        System.out.println("U servisu  je");
         User user = userRepository.findOneByUsername(username);
         UserSettings userSettings = user.getSettings();
+        if(user.getSettings() == null){
+            System.out.println("null settings");
+        }else {
+            System.out.println("Nije null");
+        }
         UserMapper.INSTANCE.patchMappingUser(user, userProfile);
         UserSettingsMapper.INSTANCE.patchMappingSettings(userSettings, userProfile);
         userRepository.save(user);
+        System.out.println("Sacuvan");
        // userSettingsRepository.save(userSettings);
         HashMap<String, String> map = new HashMap<>();
         map.put("message", "Profile  is updated.");

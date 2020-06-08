@@ -88,6 +88,7 @@ public class UserController {
     }
     @PatchMapping(value = "/updateProfile")
     public ResponseEntity<?> updateProfile(@RequestBody UserProfileResponse userProfile, @RequestHeader("Authorization") String token) {
+        System.out.println("U controleru je");
         try {
             String username = jwtTokenUtil.extractUsername(token.substring(7));
             return userService.updateProfile(userProfile, username);

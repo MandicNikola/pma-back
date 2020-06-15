@@ -31,4 +31,14 @@ public class GoalController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PatchMapping(value = "/updateGoal")
+    public ResponseEntity<?> updateGoal(Double currentValue, Long id, int flag){
+
+        try {
+            return new ResponseEntity<>(goalService.updateGoal(currentValue, id, flag), HttpStatus.OK);
+        } catch (Exception e)
+        {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

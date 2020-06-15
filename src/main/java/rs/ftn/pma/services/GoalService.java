@@ -10,6 +10,8 @@ import rs.ftn.pma.model.User;
 import rs.ftn.pma.repository.GoalRepository;
 import rs.ftn.pma.repository.UserRepository;
 
+import java.util.Optional;
+
 @Service
 public class GoalService {
 
@@ -26,6 +28,15 @@ public class GoalService {
         newGoal = goalRepository.save(newGoal);
         System.out.println("dosao u service");
         return GoalMapper.INSTANCE.mapToResponse(newGoal);
+    }
+    public GoalResponse updateGoal(Double value, Long id,int notifiedFlag) {
+
+        Goals goal = goalRepository.findOneById(id);
+        goal.setCurrentValue(value);
+        goal.setNotified(notifiedFlag);
+        Goals savedGoal = goalRepository.save(goal);
+        return GoalMapper.INSTANCE.mapToResponse(savedGoal);
+
     }
 
 }

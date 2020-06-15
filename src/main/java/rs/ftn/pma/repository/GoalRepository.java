@@ -6,4 +6,5 @@ import rs.ftn.pma.model.Goals;
 
 @Repository
 public interface GoalRepository extends JpaRepository<Goals, Long> {
+    Goals findOneById(Long id);
 }

@@ -18,5 +18,8 @@ public class GoalResponse {
 
     private double goalValue;
 
+    private Double currentValue;
+
     private String localDateTime;
+
 }

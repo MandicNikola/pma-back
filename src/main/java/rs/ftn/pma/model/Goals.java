@@ -26,7 +26,14 @@ public class Goals {
 
     private double goalValue;
 
+    private int notified;
+
+    @Column(nullable = true)
+    private Double currentValue;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     private User user;
+
+
 
 }

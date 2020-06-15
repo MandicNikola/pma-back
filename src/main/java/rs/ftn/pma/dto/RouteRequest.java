@@ -18,4 +18,5 @@ public class RouteRequest {
     private HashMap<String, List<Double>> points;
 
     private Double distance;
+
 }

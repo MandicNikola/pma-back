@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rs.ftn.pma.dto.GoalRequest;
+import rs.ftn.pma.dto.GoalResponse;
 import rs.ftn.pma.services.GoalService;
 import rs.ftn.pma.utils.JwtUtil;
 
@@ -32,10 +33,10 @@ public class GoalController {
         }
     }
     @PatchMapping(value = "/updateGoal")
-    public ResponseEntity<?> updateGoal(Double currentValue, Long id, int flag){
+    public ResponseEntity<?> updateGoal(@RequestBody GoalResponse goalResponse){
 
         try {
-            return new ResponseEntity<>(goalService.updateGoal(currentValue, id, flag), HttpStatus.OK);
+            return new ResponseEntity<>(goalService.updateGoal(goalResponse.getCurrentValue(), goalResponse.getId(), goalResponse.getNotified()), HttpStatus.OK);
         } catch (Exception e)
         {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

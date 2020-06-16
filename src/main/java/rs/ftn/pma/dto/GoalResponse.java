@@ -22,4 +22,6 @@ public class GoalResponse {
 
     private String localDateTime;
 
+    private int notified;
+
 }

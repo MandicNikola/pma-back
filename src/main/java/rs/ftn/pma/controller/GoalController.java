@@ -23,9 +23,7 @@ public class GoalController {
     public ResponseEntity<?> createGoal(@RequestBody GoalRequest goalRequest,@RequestHeader("Authorization") String token) {
         String username = jwtUtil.extractUsername(token.substring(7));
 
-        System.out.println("dosao u kontroler");
         try {
-            System.out.println(" u try");
             return new ResponseEntity<>(goalService.createGoal(username, goalRequest), HttpStatus.OK);
         } catch (Exception e)
         {
@@ -33,7 +31,7 @@ public class GoalController {
         }
     }
     @PatchMapping(value = "/updateGoal")
-    public ResponseEntity<?> updateGoal(@RequestBody GoalResponse goalResponse){
+    public ResponseEntity<?> updateGoal(@RequestBody GoalResponse goalResponse,@RequestHeader("Authorization") String token){
 
         try {
             return new ResponseEntity<>(goalService.updateGoal(goalResponse.getCurrentValue(), goalResponse.getId(), goalResponse.getNotified()), HttpStatus.OK);

@@ -20,4 +20,6 @@ public class GoalRequest {
     private double percentage;
 
     private Double currentValue;
+
+    private int notified;
 }

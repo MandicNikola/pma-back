@@ -19,6 +19,7 @@ public interface GoalMapper {
     @Mapping(source = "goalValue", target = "goalValue")
     @Mapping(source = "goalKey", target = "goalKey")
     @Mapping(source = "currentValue", target = "currentValue")
+    @Mapping(source = "notified", target = "notified")
 
     Goals mapToGoal(GoalRequest goalRequest);
 

@@ -36,6 +36,10 @@ public class UserService implements UserDetailsService {
         User user =  userRepository.findOneByUsername(username);
         return UserMapper.INSTANCE.mapToResponse(user);
     }
+    public SettingsResponse getSettings(String username) {
+        User user =  userRepository.findOneByUsername(username);
+        return UserSettingsMapper.INSTANCE.mapToSettingsResponse(user.getSettings());
+    }
     public UserProfileResponse getUserProfileByUsername(String username) {
         User user =  userRepository.findOneByUsername(username);
         UserSettings userSettings = user.getSettings();

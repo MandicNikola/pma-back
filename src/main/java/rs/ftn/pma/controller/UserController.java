@@ -120,4 +120,11 @@ public class UserController {
         System.out.println("Username  je "+loggedUser.getUsername());
         return new ResponseEntity<>(loggedUser,HttpStatus.OK);
     }
+
+    @GetMapping(value = "/waterReminder")
+    public ResponseEntity<?> getWaterReminder(@RequestHeader("Authorization") String token) {
+        String username = jwtTokenUtil.extractUsername(token.substring(7));
+        SettingsResponse settings = userService.getSettings(username);
+        return new ResponseEntity<>(settings,HttpStatus.OK);
+    }
 }

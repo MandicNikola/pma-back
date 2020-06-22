@@ -2,10 +2,7 @@ package rs.ftn.pma.mappers;
 
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
-import rs.ftn.pma.dto.SettingRequest;
-import rs.ftn.pma.dto.UserProfileResponse;
-import rs.ftn.pma.dto.UserSettingRequest;
-import rs.ftn.pma.dto.UserSettingResponse;
+import rs.ftn.pma.dto.*;
 import rs.ftn.pma.model.User;
 import rs.ftn.pma.model.UserSettings;
 
@@ -18,6 +15,9 @@ public interface UserSettingsMapper {
 
     @Mapping(source = "user", target = "userId", qualifiedByName = "mapUserId")
     UserSettingResponse mapToUserSettingsResponse(UserSettings userSettings);
+
+    @Mapping(source = "waterReminder", target = "waterReminder")
+    SettingsResponse mapToSettingsResponse(UserSettings userSettings);
 
     @Named("mapUserId")
     static Long mapUserId(User user) {

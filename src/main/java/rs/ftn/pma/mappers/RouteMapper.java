@@ -22,6 +22,7 @@ public interface RouteMapper {
     @Mapping(source = "endTime",target ="endTime", qualifiedByName = "datePrepare")
     @Mapping(source = "points", target = "points", ignore = true)
     @Mapping(source = "distance", target = "distance")
+    @Mapping(source = "calories", target = "calories")
     Route mapRequestToRoute(RouteRequest request);
 
     @Named("datePrepare")
@@ -29,5 +30,6 @@ public interface RouteMapper {
         return LocalDateTime.parse(date);
     }
 
+    @Mapping(source = "points", target="points", ignore = true)
     RouteResponse mapToResponse(Route route);
 }

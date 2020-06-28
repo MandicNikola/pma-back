@@ -36,6 +36,10 @@ public class Route {
     @Setter
     private Long distance;
 
+    @Getter
+    @Setter
+    private Double calories;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "route")
     @JsonIgnore
     @Getter

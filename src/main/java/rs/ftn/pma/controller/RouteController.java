@@ -25,7 +25,7 @@ public class RouteController {
     public ResponseEntity<?> getRoutes(@RequestHeader("Authorization") String token) {
         // remove `Bearer ` part from token
         String username = jwtUtil.extractUsername(token.substring(7));
-        return new ResponseEntity<>(new ArrayList<>(),HttpStatus.OK);
+        return new ResponseEntity<>(routeService.getAllRoutesForUser(username),HttpStatus.OK);
     }
 
     @PostMapping(value = "")

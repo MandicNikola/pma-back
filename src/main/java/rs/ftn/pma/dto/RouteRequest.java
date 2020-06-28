@@ -19,4 +19,6 @@ public class RouteRequest {
 
     private Double distance;
 
+    private Double calories;
+
 }

@@ -12,6 +12,7 @@ import rs.ftn.pma.repository.RouteRepository;
 import rs.ftn.pma.repository.UserRepository;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -48,6 +49,28 @@ public class RouteService {
         }
 
         return  pointsSet;
+    }
+
+    private HashMap<String, List<Double>> parsePoints(Set<Point> points) {
+        HashMap<String, List<Double>> retPoints = new HashMap<>();
+        for(Point point: points) {
+            retPoints.put(point.getTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")), new ArrayList<>(Arrays.asList(point.getLat(), point.getLng())));
+        }
+        return retPoints;
+    }
+
+    public List<RouteResponse> getAllRoutesForUser(String username) {
+        User user = userRepository.findOneByUsername(username);
+        if(user == null) return new ArrayList<>();
+        List<Route> routes = routeRepository.findRoutesOfUser(user);
+        if(routes == null || routes.size() == 0) return new ArrayList<>();
+        ArrayList<RouteResponse> retRoutes = new ArrayList<>();
+        for(Route route: routes) {
+            RouteResponse retRoute = RouteMapper.INSTANCE.mapToResponse(route);
+            retRoute.setPoints(parsePoints(route.getPoints()));
+            retRoutes.add(retRoute);
+        }
+        return retRoutes;
     }
 }
 

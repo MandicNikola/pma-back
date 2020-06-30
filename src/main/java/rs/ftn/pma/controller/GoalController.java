@@ -18,7 +18,18 @@ public class GoalController {
 
     @Autowired
     JwtUtil jwtUtil;
+    @GetMapping(value = "")
+    public ResponseEntity<?> getGoals(@RequestHeader("Authorization") String token) {
+        // remove `Bearer ` part from token
+        String username = jwtUtil.extractUsername(token.substring(7));
+        try {
+            return new ResponseEntity<>(goalService.getAllGoalsForUser(username), HttpStatus.OK);
 
+        }catch (Exception e)
+        {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @PostMapping(value = "")
     public ResponseEntity<?> createGoal(@RequestBody GoalRequest goalRequest,@RequestHeader("Authorization") String token) {
         String username = jwtUtil.extractUsername(token.substring(7));
